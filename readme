@@ -1,0 +1,40 @@
+1.数据库配置
+	用户通过工程下的db.xml文件配置数据库信息,可同时配置多个数据库节点
+
+2.数据库建表语句
+
+CREATE TABLE `od_dataset` (
+  `id` varchar(255) DEFAULT NULL,
+  `bussiness_key` varchar(100) NOT NULL COMMENT 'uuid',
+  `cata_title` varchar(200) DEFAULT NULL COMMENT '数据集标题',
+  `cata_url` varchar(200) DEFAULT NULL COMMENT '数据集对应的链接',
+  `org_name` varchar(100) DEFAULT '阿里云天池',
+  `group_name` varchar(100) DEFAULT '其他',
+  `industry` varchar(100) DEFAULT '人工智能',
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `description` text,
+  `open_type` varchar(50) DEFAULT '需注册',
+  `cata_tags` varchar(50) DEFAULT '其他',
+  `conf_catalog_format` varchar(50) DEFAULT '其他',
+  `data_count` varchar(50) DEFAULT '/',
+  `file_count` varchar(50) DEFAULT '/',
+  `status` int(10) DEFAULT '1',
+  `data_from_dept` varchar(50) DEFAULT '阿里云天池',
+  PRIMARY KEY (`bussiness_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `od_datasource` (
+  `id` varchar(100) DEFAULT NULL,
+  `url` varchar(100) DEFAULT NULL COMMENT 'cata_url',
+  `password` varchar(100) DEFAULT NULL,
+  `bussiness_key` varchar(200) NOT NULL COMMENT 'uuid',
+  `create_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`bussiness_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+3.程序运行：com.crawler.main包下的Main类---用于采集数据
+
+4.程序运行：com.crawler.main包下的InsertNewTable类---用于将数据插入到od_datasource表中
+   (注意这里忽略主键重复,为防止每次采集的数据有重复的情况,需定义一个id)
